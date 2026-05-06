@@ -10,19 +10,22 @@ object camion {
 		cosas.add(unaCosa)
 	}
 	method puedeCircular(peligrosidadDada){
-		return (not self.estaExcedidoDePeso()) && not(cosas.any({ cosa => cosa.nivelPeligrosidad() > peligrosidadDada}))
+		return (not self.estaExcedidoDePeso()) && not(cosas.any({ cosa => cosa.esMasPeligrosoQue(peligrosidadDada)}))
 	}
 	method descargar(unaCosa){
-		if (not cosas.contains(unaCosa)){
-			self.error("No se puede descargar algo que no esta en el camion")
-		}
+		self.verificarCamion(unaCosa)
 		cosas.remove(unaCosa)
 	}
-	method todoPesoPar() {
-	  return cosas.all({ cosa => cosa.peso().even()})
+	method verificarCamion(unaCosa){
+		return if (not cosas.contains(unaCosa)){
+			self.error("No se puede descargar algo que no esta en el camion")
+		}
 	}
-	method hayAlgunoQuePesa(pesoDado){
-		return cosas.any({cosa => cosa.peso()==pesoDado})
+	method todoPesoPar() {
+	  return cosas.all({ cosa => cosa.tienePesoPar()})
+	}
+	method hayAlgunoQuePesa(pesoDado) {
+    	return cosas.any({ cosa => cosa.pesa(pesoDado) })
 	}
 	method estaExcedidoDePeso() = self.pesoTotal() > pesoMaximo
 	method pesoTotal() = pesoTara + self.pesoTodasLasCosas()
@@ -30,10 +33,10 @@ object camion {
 		return cosas.sum({cosa => cosa.peso()})
 	}
 	method hayAlgunoTanPeligroso(peligrosidadBuscada){
-		return cosas.find({cosa => cosa.nivelPeligrosidad()==peligrosidadBuscada})
+		return cosas.find({cosa => cosa.esTanPeligroso(peligrosidadBuscada)})
 	}
 	method tieneAlgoEntre(min,max){
-		return cosas.any({ cosa => cosa.peso() > min and cosa.peso()< max})
+		return cosas.any({ cosa => cosa.pesaEntre(min,max)})
 	}
 	method cosaMasPesada(){
 		return  cosas.max({cosa => cosa.peso()})
@@ -55,5 +58,11 @@ object camion {
 	}
 	method pesoMaximo(nuevoPeso) {
 	  pesoMaximo = nuevoPeso
+	}
+	method cosasQueSuperanPeligrosidad(nivel){
+    	return cosas.filter({cosa => cosa.esMasPeligrosoQue(nivel)})
+	}
+	method cosasmasPeligrosasQue(unaCosa){
+    	return cosas.filter({cosa => cosa.esMasPeligrosoQueObjeto(unaCosa)})
 	}
 }

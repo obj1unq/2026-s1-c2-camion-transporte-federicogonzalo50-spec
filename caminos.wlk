@@ -1,6 +1,6 @@
 import cosas.*
 import camion.*
-im
+import destinos.*
 
 object ruta9{
     method soportaElViaje(transporte){

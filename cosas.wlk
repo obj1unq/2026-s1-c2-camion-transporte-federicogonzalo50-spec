@@ -7,19 +7,57 @@ object knightRider {
 	method peso() { return 500 }
 	method nivelPeligrosidad() { return 10 }
 	method cantBultos(){ return 1}
+	method tienePesoPar() {
+		return self.peso().even()
+	}
+	method pesa(unValor) {
+		return self.peso() == unValor
+	}
+	method esTanPeligroso(peligrosidadBuscada){
+		return self.nivelPeligrosidad() == peligrosidadBuscada
+	}
 	method sufrioAccidente() {
 	}
+	method pesaEntre(min, max){
+    	return self.peso() > min and self.peso() < max
+	}
+	method esMasPeligrosoQue(nivel){
+    	return self.nivelPeligrosidad() >= nivel  // ya lo tenés
+	}
+
+	method esMasPeligrosoQueObjeto(otraCosa){
+    	return self.nivelPeligrosidad() > otraCosa.nivelPeligrosidad()
+	}	
 }
 object arenaAGranel {
-	var pesoActual = 1
-	method peso() { return pesoActual }
+	var peso = 1
+	method peso() { return peso }
 	method nivelPeligrosidad() { return 1 }
-	method pesoActual(nuevo){
-		pesoActual = nuevo
+	method peso(nuevo){
+		peso = nuevo
 	}
 	method cantBultos(){ return 1}
 	method sufrioAccidente(){
-		pesoActual = pesoActual + 20
+		peso = peso + 20
+	}
+	method tienePesoPar() {
+		return self.peso().even()
+	}
+	method esTanPeligroso(peligrosidadBuscada){
+		return self.nivelPeligrosidad() == peligrosidadBuscada
+	}
+	method pesa(unValor) {
+		return self.peso() == unValor
+	}
+	method pesaEntre(min, max){
+    	return self.peso() > min and self.peso() < max
+	}
+	method esMasPeligrosoQue(nivel){
+    	return self.nivelPeligrosidad() >= nivel  // ya lo tenés
+	}
+
+	method esMasPeligrosoQueObjeto(otraCosa){
+    	return self.nivelPeligrosidad() > otraCosa.nivelPeligrosidad()
 	}
 }
 object bumblebee {
@@ -36,13 +74,32 @@ object bumblebee {
 	method sufrioAccidente(){
 		estaComoRobot = not (estaComoRobot)
 	}
-	method estaComoRobot() = estaComoRobot 
+	method estaComoRobot() = estaComoRobot
+	
+	method tienePesoPar() {
+		return self.peso().even()
+	}
+	method esTanPeligroso(peligrosidadBuscada){
+		return self.nivelPeligrosidad() == peligrosidadBuscada
+	}
+	method pesa(unValor) {
+		return self.peso() == unValor
+	}
+	method pesaEntre(min, max){
+    	return self.peso() > min and self.peso() < max
+	}
+	method esMasPeligrosoQue(nivel){
+    	return self.nivelPeligrosidad() >= nivel  // ya lo tenés
+	}
+
+	method esMasPeligrosoQueObjeto(otraCosa){
+    	return self.nivelPeligrosidad() > otraCosa.nivelPeligrosidad()
+	}
 }
 object paqueteLadrillos {
 	var cantLadrillos = 0
 	const pesoLadrillo = 2
-	method peso() { return self.pesoPaqueteLadrillo()}
-	method pesoPaqueteLadrillo() { return pesoLadrillo * cantLadrillos }
+	method peso() { return pesoLadrillo * cantLadrillos}
 	method nivelPeligrosidad() { return 2 }
 	method cantLadrillos(nuevaCant){
 		cantLadrillos = nuevaCant
@@ -55,11 +112,30 @@ object paqueteLadrillos {
 		}else 2
 	}
 	method sufrioAccidente(){
-		if(cantLadrillos>12)
+		if(cantLadrillos>=12)
 		cantLadrillos = cantLadrillos - 12
 		else cantLadrillos = 0
 	}
 	method cantLadrillos() = cantLadrillos 
+	method tienePesoPar() {
+		return self.peso().even()
+	}
+	method pesa(unValor) {
+		return self.peso() == unValor
+	}
+	method esTanPeligroso(peligrosidadBuscada){
+		return self.nivelPeligrosidad() == peligrosidadBuscada
+	}
+	method pesaEntre(min, max){
+    	return self.peso() > min and self.peso() < max
+	}
+	method esMasPeligrosoQue(nivel){
+    	return self.nivelPeligrosidad() >= nivel  // ya lo tenés
+	}
+
+	method esMasPeligrosoQueObjeto(otraCosa){
+    	return self.nivelPeligrosidad() > otraCosa.nivelPeligrosidad()
+	}
 }
 object bateriaAntiAerea {
 	var estaConMisiles = false
@@ -80,7 +156,29 @@ object bateriaAntiAerea {
 	}
 	method sufrioAccidente() {
 	  if (estaConMisiles)
-	   self.estaConMisiles(false)
+	   self.desarmarMisiles()
+	}
+	method desarmarMisiles(){
+		estaConMisiles = false
+	}
+	method tienePesoPar() {
+		return self.peso().even()
+	}
+	method pesa(unValor) {
+		return self.peso() == unValor
+	}
+	method esTanPeligroso(peligrosidadBuscada){
+		return self.nivelPeligrosidad() == peligrosidadBuscada
+	}
+	method pesaEntre(min, max){
+    	return self.peso() > min and self.peso() < max
+	}
+	method esMasPeligrosoQue(nivel){
+    	return self.nivelPeligrosidad() >= nivel  // ya lo tenés
+	}
+
+	method esMasPeligrosoQueObjeto(otraCosa){
+    	return self.nivelPeligrosidad() > otraCosa.nivelPeligrosidad()
 	}
 }
 object residuosRad {
@@ -97,6 +195,25 @@ object residuosRad {
 	method cantBultos(){ return 1}
 	method sufrioAccidente(){
 		peso = peso + 15
+	}
+	method tienePesoPar() {
+		return self.peso().even()
+	}
+	method pesa(unValor) {
+		return self.peso() == unValor
+	}
+	method esTanPeligroso(peligrosidadBuscada){
+		return self.nivelPeligrosidad() == peligrosidadBuscada
+	}
+	method pesaEntre(min, max){
+    	return self.peso() > min and self.peso() < max
+	}
+	method esMasPeligrosoQue(nivel){
+    	return self.nivelPeligrosidad() >= nivel  // ya lo tenés
+	}
+
+	method esMasPeligrosoQueObjeto(otraCosa){
+    	return self.nivelPeligrosidad() > otraCosa.nivelPeligrosidad()
 	}
 }
 object contenedorPortuario{
@@ -116,15 +233,35 @@ object contenedorPortuario{
 	}
 	method nivelPeligrosidad(){
 		if (cosas.isEmpty()){
-			return 0
+			self.error("El contenedor esta vacio, no se puede calcular peligrosidad")
 		}
-		return cosas.map({ cosa => cosa.nivelPeligrosidad()}).max()
+		const niveles = cosas.map({cosa => cosa.nivelPeligrosidad()})
+	 	return niveles.max()
 	}
 	method cantBultos() {
 	   return 1 + cosas.sum({cosa => cosa.cantBultos()})
 	}
 	method sufrioAccidente(){
 		cosas.forEach({cosa => cosa.sufrioAccidente()})
+	}
+	method tienePesoPar() {
+		return self.peso().even()
+	}
+	method pesa(unValor) {
+		return self.peso() == unValor
+	}
+	method esTanPeligroso(peligrosidadBuscada){
+		return self.nivelPeligrosidad() == peligrosidadBuscada
+	}
+	method pesaEntre(min, max){
+    	return self.peso() > min and self.peso() < max
+	}
+	method esMasPeligrosoQue(nivel){
+    	return self.nivelPeligrosidad() >= nivel  // ya lo tenés
+	}
+
+	method esMasPeligrosoQueObjeto(otraCosa){
+    	return self.nivelPeligrosidad() > otraCosa.nivelPeligrosidad()
 	}
 }
 object embalajeDeSeg{
@@ -136,6 +273,25 @@ object embalajeDeSeg{
 	method nivelPeligrosidad() = objEnvuelto.nivelPeligrosidad()*0.5 
 	method cantBultos(){return 2}
 	method sufrioAccidente(){
+	}
+	method tienePesoPar() {
+		return self.peso().even()
+	}
+	method pesa(unValor) {
+		return self.peso() == unValor
+	}
+	method esTanPeligroso(peligrosidadBuscada){
+		return self.nivelPeligrosidad() == peligrosidadBuscada
+	}
+	method pesaEntre(min, max){
+    	return self.peso() > min and self.peso() < max
+	}
+	method esMasPeligrosoQue(nivel){
+    	return self.nivelPeligrosidad() >= nivel  // ya lo tenés
+	}
+
+	method esMasPeligrosoQueObjeto(otraCosa){
+    	return self.nivelPeligrosidad() > otraCosa.nivelPeligrosidad()
 	}
 }
 

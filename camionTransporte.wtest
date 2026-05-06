@@ -19,19 +19,19 @@ describe "Test de carga y descarga del camion"{
 describe "testeo de pesos pares e impares"{
     test "Todo peso par bumblebee(800) y arena (50)"{
         camion.cargar(bumblebee)
-        arenaAGranel.pesoActual(50)
+        arenaAGranel.peso(50)
         camion.cargar(arenaAGranel)
         assert.that(camion.todoPesoPar())
     }
      test "No todo peso par bumblebee(800) y arena (51)"{
         camion.cargar(bumblebee)
-        arenaAGranel.pesoActual(51)
+        arenaAGranel.peso(51)
         camion.cargar(arenaAGranel)
         assert.notThat(camion.todoPesoPar())
     }
     test "algo pesa 50,alguno pesa 800, ninguno pesa 500, con bumbleble(800 y arena (50)"{
         camion.cargar(bumblebee)
-        arenaAGranel.pesoActual(50)
+        arenaAGranel.peso(50)
         camion.cargar(arenaAGranel)
         assert.that(camion.hayAlgunoQuePesa(50))
         assert.that(camion.hayAlgunoQuePesa(800))
@@ -58,6 +58,11 @@ describe "Tests de Peso y Exceso de Peso"{
 }
 describe "Test de Peligrosidad y cosas peligrosas"{
     test "busca cosas con los sig niveles de peligrosidad [0,15,200,30] en un camion con bateria antiaerea sin misiles (0),bumblebee modo auto(15) y residuos(200)"{
+        assert.notThat(bumblebee.estaComoRobot())
+        assert.equals(15, bumblebee.nivelPeligrosidad())
+        assert.notThat(bateriaAntiAerea.estaConMisiles())
+        assert.equals(0, bateriaAntiAerea.nivelPeligrosidad())
+        assert.equals(200, residuosRad.nivelPeligrosidad())
         camion.cargar(bumblebee)
         camion.cargar(bateriaAntiAerea)
         camion.cargar(residuosRad)
@@ -98,10 +103,10 @@ describe "test de más cosas"{
     test "el contenedor esta vacio y no es peligroso"{
         camion.cargar(contenedorPortuario)
         assert.equals(100, contenedorPortuario.peso())
-        assert.equals(0, contenedorPortuario.nivelPeligrosidad())
+        assert.throwsException({contenedorPortuario.nivelPeligrosidad()})
     }
     test "contenedor con knight rider y 50 kg de arena, pesa 650 y su peligrosidad es 10"{
-        arenaAGranel.pesoActual(50)
+        arenaAGranel.peso(50)
         contenedorPortuario.cargar(arenaAGranel)
         contenedorPortuario.cargar(knightRider)
         camion.cargar(contenedorPortuario)
@@ -190,7 +195,7 @@ describe "Accidente" {
     contenedorPortuario.cargar(bumblebee)
     residuosRad.peso(30)
     embalajeDeSeg.objEnvuelto(residuosRad)
-    arenaAGranel.pesoActual(50)
+    arenaAGranel.peso(50)
     paqueteLadrillos.cantLadrillos(100)
     bateriaAntiAerea.estaConMisiles(true)
     camion.cargar(contenedorPortuario)
@@ -227,7 +232,7 @@ describe "transporte" {
        almacen.depositarCosa(knightRider)
        almacen.depositarCosa(residuosRad)
        camion.cargar(bumblebee)
-       arenaAGranel.pesoActual(50)
+       arenaAGranel.peso(50)
        camion.cargar(arenaAGranel) 
     }
   test "ruta 9 caso exitoso" {
@@ -246,7 +251,7 @@ describe "transporte" {
   }
   test "ruta 9 fallido por exceso de peso"{
     bloqueTesteoTransporte.apply()
-    arenaAGranel.pesoActual(2000)
+    arenaAGranel.peso(2000)
     assert.notThat((ruta9.soportaElViaje(camion)))
     assert.equals(#{knightRider,residuosRad}, almacen.cosas())
     assert.equals(#{bumblebee,arenaAGranel}, camion.cosas())
